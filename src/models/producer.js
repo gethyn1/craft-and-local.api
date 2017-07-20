@@ -3,6 +3,13 @@
 import mongoose, { Schema } from 'mongoose'
 
 const ProducerSchema = Schema({
+  user_id: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    required: 'User ID is required',
+  },
   title: {
     type: String,
     required: 'Title is required',
