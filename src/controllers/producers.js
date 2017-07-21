@@ -1,5 +1,7 @@
 // @flow
 
+import request from 'request'
+
 import categories from '../data/categories'
 import producers from '../data/producers'
 
@@ -36,7 +38,7 @@ export const getProducers = (query: Object) =>
           reject({
             status: 'error',
             data: {
-              tite: err,
+              title: err,
             },
           })
         }
@@ -50,16 +52,16 @@ export const getProducers = (query: Object) =>
       })
   })
 
-export const getProducer = (id: string) =>
+export const getProducer = (user_id: string) =>
   new Promise((resolve, reject) => {
     Producer
-      .findById(id)
+      .findOne({ user_id })
       .exec((err, results) => {
         if (err) {
           reject({
             status: 'error',
             data: {
-              tite: err,
+              title: err,
             },
           })
         }
@@ -71,4 +73,27 @@ export const getProducer = (id: string) =>
           },
         })
       })
+  })
+
+export const getProducerInstagramFeed = (handle: string) =>
+  new Promise((resolve, reject) => {
+    request({
+      url: `https://www.instagram.com/${handle}/media/`,
+      json: true
+    }, (err, response, body) => {
+
+      if (!err && response.statusCode === 200) {
+        resolve({
+          status: 'success',
+          data: body.items,
+        })
+      }
+
+      reject({
+        status: 'error',
+        data: {
+          title: err,
+        },
+      })
+    })
   })

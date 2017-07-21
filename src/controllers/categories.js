@@ -13,7 +13,7 @@ export const getCategories = () =>
           reject({
             status: 'error',
             data: {
-              tite: err,
+              title: err,
             },
           })
         }
