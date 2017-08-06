@@ -33,6 +33,7 @@ export const getProducers = (query: Object) =>
 
     Producer
       .find(filters)
+      .populate('categories')
       .exec((err, results) => {
         if (err) {
           reject({
@@ -56,6 +57,7 @@ export const getProducer = (user_id: string) =>
   new Promise((resolve, reject) => {
     Producer
       .findOne({ user_id })
+      .populate('categories')
       .exec((err, results) => {
         if (err) {
           reject({

@@ -17,9 +17,7 @@ const ProducerSchema = Schema({
   description: {
     type: String,
   },
-  categories: {
-    type: [String],
-  },
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   delivery: {
     type: { type: Boolean, default: false },
   },
