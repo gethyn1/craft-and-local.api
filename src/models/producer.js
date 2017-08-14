@@ -19,14 +19,12 @@ const ProducerSchema = Schema({
   },
   categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   delivery: {
-    type: { type: Boolean, default: false },
+    type: Boolean,
+    default: false,
   },
   boxScheme: {
-    type: { type: Boolean, default: false },
-  },
-  latLng: {
-    lat: Number,
-    lng: Number,
+    type: Boolean,
+    default: false,
   },
   location: {
     type: {
@@ -38,6 +36,10 @@ const ProducerSchema = Schema({
       min: [2, 'Coordinates must contain 2 points'],
       max: [2, 'Coordinates must contain 2 points']
     }
+  },
+  social_handles: {
+    instagram: { type: String },
+    twitter: { type: String },
   }
 })
 

@@ -3,6 +3,7 @@
 import { BASE_PATH } from '../config'
 
 import {
+  createProducer,
   getProducers,
   getProducer,
   getProducerInstagramFeed,
@@ -11,6 +12,12 @@ import {
 export default (app: Object) => {
   app.get(`${BASE_PATH}/producers`, (req, res) => {
     getProducers(req.query)
+      .then(data => res.json(data))
+      .catch(err => res.json(err))
+  })
+
+  app.post(`${BASE_PATH}/producers/create`, (req, res) => {
+    createProducer(req.body)
       .then(data => res.json(data))
       .catch(err => res.json(err))
   })

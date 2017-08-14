@@ -2,8 +2,8 @@
 
 import request from 'request'
 
-import categories from '../data/categories'
-import producers from '../data/producers'
+// import categories from '../data/categories'
+// import producers from '../data/producers'
 
 import Producer from '../models/producer'
 
@@ -51,6 +51,48 @@ export const getProducers = (query: Object) =>
           },
         })
       })
+  })
+
+export const createProducer = (producer: Object) =>
+  new Promise((resolve, reject) => {
+    const newProducer = new Producer({
+      user_id: producer.user_id,
+      title: producer.title,
+      description: producer.description,
+      categories: producer.categories || [],
+      delivery: producer.delivery,
+      box_scheme: producer.box_scheme,
+      location: {
+        type: "Point",
+        coordinates: [
+          producer.lng,
+          producer.lat,
+        ]
+      },
+      social_handles: {
+        instagram: producer.instagram_handle,
+        twitter: producer.twitter_handle,
+      },
+      website: producer.website,
+    })
+
+    newProducer.save((err, data) => {
+      if (err) {
+        reject({
+          status: 'error',
+          data: {
+            title: err,
+          },
+        })
+      }
+
+      resolve({
+        status: 'success',
+        data: {
+          producer: data,
+        },
+      })
+    })
   })
 
 export const getProducer = (user_id: string) =>
