@@ -34,11 +34,12 @@ UserSchema.pre('save', function(next) {
 })
 
 // Compare database password hash with user submitted password
-UserSchema.methods.comparePassword = (candidatePassword, cb) => {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return cb(err)
-
-    cb(null, isMatch)
+UserSchema.methods.comparePassword = function(candidatePassword) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+      if (err) reject(err)
+      resolve(isMatch)
+    })
   })
 }
 

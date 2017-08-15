@@ -10,7 +10,7 @@ import express from 'express'
 import { Server } from 'http'
 
 import './db'
-import { WEB_PORT, isProd } from '../config'
+import { WEB_PORT, isProd, JWT_SECRET } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
 import userRoutes from '../routes/users'
@@ -19,6 +19,7 @@ const app = express()
 // flow-disable-next-line
 const http = Server(app)
 
+app.set('jwtTokenSecret', JWT_SECRET)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
