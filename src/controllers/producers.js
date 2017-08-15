@@ -81,7 +81,8 @@ export const createProducer = (producer: Object) =>
         reject({
           status: 'error',
           data: {
-            title: err,
+            title: 'There was an error creating the producer',
+            errors: err.errors,
           },
         })
       }

@@ -13,6 +13,7 @@ import './db'
 import { WEB_PORT, isProd } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
+import userRoutes from '../routes/users'
 
 const app = express()
 // flow-disable-next-line
@@ -25,11 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
   res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+  res.header('Access-Control-Allow-Headers', 'content-type')
   next()
 })
 
 producerRoutes(app)
 categoryRoutes(app)
+userRoutes(app)
 
 http.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console
