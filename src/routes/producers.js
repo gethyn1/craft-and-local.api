@@ -9,6 +9,8 @@ import {
   getProducerInstagramFeed,
 } from '../controllers/producers'
 
+import { authenticateJWT } from '../controllers/auth'
+
 export default (app: Object) => {
   app.get(`${BASE_PATH}/producers`, (req, res) => {
     getProducers(req.query)
@@ -16,7 +18,7 @@ export default (app: Object) => {
       .catch(err => res.json(err))
   })
 
-  app.post(`${BASE_PATH}/producers/create`, (req, res) => {
+  app.post(`${BASE_PATH}/producers/create`, authenticateJWT, (req, res) => {
     createProducer(req.body)
       .then(data => res.json(data))
       .catch(err => res.json(err))

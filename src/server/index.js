@@ -13,7 +13,7 @@ import './db'
 import { WEB_PORT, isProd, JWT_SECRET } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
-import userRoutes from '../routes/users'
+import { userRoutes, userAdminRoutes } from '../routes/users'
 
 const app = express()
 // flow-disable-next-line
@@ -26,14 +26,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // Setup CORS so front-end app can access the API
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
-  res.header('Access-Control-Allow-Headers', 'content-type')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
   next()
 })
 
 producerRoutes(app)
 categoryRoutes(app)
 userRoutes(app)
+userAdminRoutes(app)
 
 http.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console
