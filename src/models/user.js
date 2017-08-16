@@ -8,11 +8,24 @@ const UserSchema = Schema({
     type: String,
     required: 'Email is required',
     unique: true,
+    trim: true,
+    match: [/.+\@.+\..+/, 'Please use a valid email address']
   },
   password: {
     type: String,
     required: 'Password is required',
-  }
+  },
+  roles: {
+    type: [{
+      type: String,
+      enum: ['user', 'admin']
+    }],
+    default: ['user']
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
 })
 
 // Hash password before saving to database
