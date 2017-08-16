@@ -11,12 +11,12 @@ import {
 import { authenticateJWT } from '../controllers/auth'
 
 export const userRoutes = (app: Object) => {
-  app.post(`${BASE_PATH}/user/authenticate`, (req, res) => {
+  app.post(`${BASE_PATH}/user/authenticate`, (req: Object, res: Object) => {
     authenticateUser(req.body.email, req.body.password, req.app.get('jwtTokenSecret'))
       .then(data => res.json(data))
       .catch(err => res.json(err))
   })
-  app.get(`${BASE_PATH}/users`, (req, res) => {
+  app.get(`${BASE_PATH}/users`, (req: Object, res: Object) => {
     getUsers()
       .then(data => res.json(data))
       .catch(err => res.json(err))
@@ -24,7 +24,7 @@ export const userRoutes = (app: Object) => {
 }
 
 export const userAdminRoutes = (app: Object) => {
-  app.post(`${BASE_PATH}/users/create`, (req, res) => {
+  app.post(`${BASE_PATH}/users/create`, (req: Object, res: Object) => {
     createUser(req.body)
       .then(data => res.json(data))
       .catch(err => res.json(err))
