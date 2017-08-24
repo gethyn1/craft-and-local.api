@@ -34,7 +34,7 @@ export default (app: Object) => {
   app.get(`${BASE_PATH}/producers/:id`, (req: Object, res: Object) => {
     getProducer(req.params.id)
       .then(data => res.json(data))
-      .catch(err => res.json(err))
+      .catch(err => res.status(err.statusCode).json(err.data))
   })
 
   app.get(`${BASE_PATH}/instagram/:handle`, (req: Object, res: Object) => {

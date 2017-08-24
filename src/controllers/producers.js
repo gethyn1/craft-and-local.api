@@ -2,9 +2,6 @@
 
 import request from 'request'
 
-// import categories from '../data/categories'
-// import producers from '../data/producers'
-
 import Producer from '../models/producer'
 
 export const getProducers = (query: Object) =>
@@ -108,6 +105,18 @@ export const getProducer = (user_id: string) =>
             data: {
               title: err,
             },
+          })
+        }
+
+        if (!results) {
+          reject({
+            statusCode: 404,
+            data: {
+              status: 'error',
+              data: {
+                title: 'No producer found with requested ID',
+              },
+            }
           })
         }
 

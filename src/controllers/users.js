@@ -38,6 +38,8 @@ export const authenticateUser = (email: string, password: string, secret: string
             status: 'success',
             data: {
               token,
+              isAdmin: user.roles.includes('admin'),
+              email: user.email,
             },
           })
         })
