@@ -19,13 +19,10 @@
     "prepush": "yarn test && yarn prod:build"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-flow-react-proptypes": "^3.4.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
-    "cross-env": "^5.0.1",
     "eslint": "^4.2.0",
     "eslint-plugin-compat": "^1.0.4",
     "eslint-plugin-flowtype": "^2.35.0",
@@ -35,10 +32,13 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
     "babel-polyfill": "^6.23.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.2",
     "compression": "^1.7.0",
+    "cross-env": "^5.0.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.2",
