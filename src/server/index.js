@@ -10,7 +10,7 @@ import express from 'express'
 import { Server } from 'http'
 
 import './db'
-import { WEB_PORT, isProd, JWT_SECRET } from '../config'
+import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
 import { userRoutes, userAdminRoutes } from '../routes/users'
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // Setup CORS so front-end app can access the API
 app.all('*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Origin', CORS_WEB_APP_ORIGIN)
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
   next()
 })

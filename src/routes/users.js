@@ -8,8 +8,6 @@ import {
   createUser,
 } from '../controllers/users'
 
-import { authenticateJWT } from '../controllers/auth'
-
 export const userRoutes = (app: Object) => {
   app.post(`${BASE_PATH}/user/authenticate`, (req: Object, res: Object) => {
     authenticateUser(req.body.email, req.body.password, req.app.get('jwtTokenSecret'))

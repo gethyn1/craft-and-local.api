@@ -4,13 +4,16 @@
   "description": "API for Craft & Local",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "7.7.4"
+  },
   "scripts": {
     "start": "yarn dev:start",
     "dev:start": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
     "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js && cross-env NODE_ENV=production",
     "prod:start": "cross-env NODE_ENV=production heroku local",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "yarn lint && flow && jest --coverage",
+    "test": "yarn lint && flow",
     "heroku-postbuild": "yarn prod:build",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
