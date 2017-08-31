@@ -40,7 +40,18 @@ const ProducerSchema = Schema({
   social_handles: {
     instagram: { type: String },
     twitter: { type: String },
-  }
+  },
+  contact_email: {
+    type: String,
+    trim: true,
+    match: [/.+\@.+\..+/, 'Please use a valid email address'],
+  },
+  contact_telephone: {
+    type: String,
+  },
+  website: {
+    type: String,
+  },
 })
 
 export default mongoose.model('Producer', ProducerSchema)

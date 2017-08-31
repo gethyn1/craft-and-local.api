@@ -71,6 +71,8 @@ export const createProducer = (producer: Object) =>
         twitter: producer.twitter_handle,
       },
       website: producer.website,
+      contact_email: producer.contact_email,
+      contact_telephone: producer.contact_telephone,
     })
 
     newProducer.save((err, data) => {
