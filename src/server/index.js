@@ -16,6 +16,7 @@ import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
 import { userRoutes, userAdminRoutes } from '../routes/users'
+import robotsTxtRoute from '../routes/robots'
 
 const app = express()
 // flow-disable-next-line
@@ -51,6 +52,7 @@ producerRoutes(app)
 categoryRoutes(app)
 userRoutes(app)
 userAdminRoutes(app)
+robotsTxtRoute(app)
 
 http.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console
