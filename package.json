@@ -43,6 +43,8 @@
     "compression": "^1.7.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
+    "express-rate-limit": "^2.9.0",
+    "helmet": "^3.8.1",
     "jsonwebtoken": "^7.4.2",
     "mongoose": "^4.11.3",
     "request": "^2.81.0"
