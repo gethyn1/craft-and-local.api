@@ -12,3 +12,4 @@ export const APP_NAME = 'Craft & Local API'
 export const BASE_PATH = ''
 
 export const isProd = process.env.NODE_ENV === 'production'
+export const DEBUG =  false

@@ -4,6 +4,8 @@ import request from 'request'
 
 import Producer from '../models/producer'
 
+const PRODUCER_LIMIT = 2
+
 export const getProducers = (query: Object) =>
   new Promise((resolve, reject) => {
     // Create an empty filters object for querying the database.
@@ -18,7 +20,18 @@ export const getProducers = (query: Object) =>
       filters.location = {
         $near: {
           $geometry: { type: "Point",  coordinates: [ lng, lat ] },
-          $maxDistance : 100000
+        }
+      }
+
+      if (query.hasOwnProperty('mindistance')) {
+        // Set a min distance to query from.
+        filters.location.$near.$minDistance = query.mindistance
+      }
+
+      if (query.hasOwnProperty('exclude')) {
+        // Exclude producers by id.
+        filters._id = {
+          $nin: query.exclude.split(',')
         }
       }
     }
@@ -30,6 +43,7 @@ export const getProducers = (query: Object) =>
 
     Producer
       .find(filters)
+      .limit(PRODUCER_LIMIT)
       .populate('categories')
       .exec((err, results) => {
         if (err) {
@@ -97,6 +111,7 @@ export const createProducer = (producer: Object) =>
 
 export const getProducer = (user_id: string) =>
   new Promise((resolve, reject) => {
+    console.log('test')
     Producer
       .findOne({ user_id })
       .populate('categories')

@@ -8,11 +8,12 @@ import bodyParser from 'body-parser'
 import compression from 'compression'
 import express from 'express'
 import helmet from 'helmet'
+import morgan from 'morgan'
 import RateLimit from 'express-rate-limit'
 import { Server } from 'http'
 
 import './db'
-import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN } from '../config'
+import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN, DEBUG } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
 import { userRoutes, userAdminRoutes } from '../routes/users'
@@ -25,6 +26,11 @@ const http = Server(app)
 app.set('jwtTokenSecret', JWT_SECRET)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// Debugging with morgan
+if (!isProd && DEBUG) {
+  app.use(morgan('combined'))
+}
 
 // Express security with helmet module
 app.use(helmet())
