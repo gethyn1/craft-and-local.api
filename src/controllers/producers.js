@@ -4,12 +4,19 @@ import request from 'request'
 
 import Producer from '../models/producer'
 
-const PRODUCER_LIMIT = 2
+const PRODUCER_LIMIT = 20
 
 export const getProducers = (query: Object) =>
   new Promise((resolve, reject) => {
+    let limit = PRODUCER_LIMIT
+
     // Create an empty filters object for querying the database.
     const filters = {}
+
+    if (query.hasOwnProperty('limit')) {
+      // Set a min distance to query from.
+      limit = parseInt(query.limit, 10)
+    }
 
     if (query.hasOwnProperty('latlng')) {
       // Filter results by location (nearest to furthest).
@@ -43,7 +50,7 @@ export const getProducers = (query: Object) =>
 
     Producer
       .find(filters)
-      .limit(PRODUCER_LIMIT)
+      .limit(limit)
       .populate('categories')
       .exec((err, results) => {
         if (err) {
