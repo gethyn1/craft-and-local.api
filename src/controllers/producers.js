@@ -118,7 +118,6 @@ export const createProducer = (producer: Object) =>
 
 export const getProducer = (user_id: string) =>
   new Promise((resolve, reject) => {
-    console.log('test')
     Producer
       .findOne({ user_id })
       .populate('categories')
