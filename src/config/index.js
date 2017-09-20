@@ -13,3 +13,8 @@ export const BASE_PATH = ''
 
 export const isProd = process.env.NODE_ENV === 'production'
 export const DEBUG =  false
+
+export const S3_KEY = process.env.S3_KEY
+export const S3_SECRET = process.env.S3_SECRET
+export const S3_BUCKET = process.env.S3_BUCKET
+export const S3_REGION = process.env.S3_REGION

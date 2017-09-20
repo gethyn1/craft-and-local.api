@@ -16,6 +16,7 @@ import './db'
 import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN, DEBUG } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
+import uploadRoutes from '../routes/uploads'
 import { userRoutes, userAdminRoutes } from '../routes/users'
 import robotsTxtRoute from '../routes/robots'
 
@@ -58,6 +59,7 @@ app.all('*', function(req, res, next) {
 
 producerRoutes(app)
 categoryRoutes(app)
+uploadRoutes(app)
 userRoutes(app)
 userAdminRoutes(app)
 robotsTxtRoute(app)
