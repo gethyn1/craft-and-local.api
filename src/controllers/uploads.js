@@ -12,10 +12,22 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
 })
 
+const timestampedID = () =>
+  `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+const getFileExtension = (fileName: string) =>
+  fileName.slice((fileName.lastIndexOf('.') - 1 >>> 0) + 2)
+
+const generateUniqueFileName = (fileName: string) =>
+  `${timestampedID()}.${getFileExtension(fileName)}`
+
 export const uploadImage = (file: Object) =>
+
   new Promise((resolve, reject) => {
+    const uniqueFileName = generateUniqueFileName(file.originalname)
+
     const params = {
-      Key: file.originalname,
+      Key: uniqueFileName,
       Body: file.buffer,
       ContentType: file.mimetype,
       ContentLength : file.size,
@@ -24,7 +36,6 @@ export const uploadImage = (file: Object) =>
 
     s3.putObject(params, (err, data) => {
         if (err) {
-          console.log('err', err)
           reject({
             status: 'error',
             data: {
@@ -33,11 +44,10 @@ export const uploadImage = (file: Object) =>
           })
         }
 
-        console.log('data', data)
         resolve({
           status: 'success',
           data: {
-            url: file.originalname,
+            url: uniqueFileName,
           },
         })
       }
