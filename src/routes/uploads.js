@@ -9,7 +9,7 @@ import {
   authenticateAsAdmin,
 } from '../controllers/auth'
 
-import { uploadImage } from '../controllers/uploads'
+import { uploadImage, deleteImage } from '../controllers/uploads'
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -25,6 +25,16 @@ export default (app: Object) => {
     upload.single('avatar'),
     (req: Object, res: Object) => {
       uploadImage(req.file)
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
+  })
+
+  app.post(
+    `${BASE_PATH}/uploads/delete`,
+    authenticateJSONWebToken,
+    authenticateAsAdmin,
+    (req: Object, res: Object) => {
+      deleteImage(req.body.key)
         .then(data => res.json(data))
         .catch(err => res.json(err))
   })

@@ -22,7 +22,6 @@ const generateUniqueFileName = (fileName: string) =>
   `${timestampedID()}.${getFileExtension(fileName)}`
 
 export const uploadImage = (file: Object) =>
-
   new Promise((resolve, reject) => {
     const uniqueFileName = generateUniqueFileName(file.originalname)
 
@@ -52,4 +51,29 @@ export const uploadImage = (file: Object) =>
         })
       }
     )
+  })
+
+export const deleteImage = (key: string) =>
+  new Promise((resolve, reject) => {
+    const params = {
+      Key: key,
+    }
+
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        reject({
+          status: 'error',
+          data: {
+            title: err,
+          }
+        })
+      }
+
+      resolve({
+        status: 'success',
+        data: {
+          title: 'File succesfully deleted',
+        },
+      })
+    })
   })
