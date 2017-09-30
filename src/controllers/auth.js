@@ -47,7 +47,6 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
  */
 
 export const authenticateAsAdmin = (req: Object, res: Object, next: Function) => {
-  console.log('req.decoded', req.decoded)
   if (!req.decoded || !req.decoded._doc.roles.includes('admin')) {
     res.json(unauthorisedResponse)
   } else {
