@@ -58,6 +58,7 @@ export const getProducers = (query: Object) =>
 
       if (query.hasOwnProperty('mindistance')) {
         // Set a min distance to query from.
+        // flow-disable-next-line
         filters.location.$near.$minDistance = query.mindistance
       }
 

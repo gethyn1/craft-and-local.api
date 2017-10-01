@@ -32,7 +32,7 @@ export const uploadImage = (file: Object) =>
       ContentType: file.mimetype,
       ContentLength : file.size,
       ACL: 'public-read'
-    };
+    }
 
     s3.putObject(params, (err, data) => {
         if (err) {
