@@ -9,7 +9,7 @@ import {
   authenticateAsAdmin,
 } from '../controllers/auth'
 
-import { uploadImage, deleteImage } from '../controllers/uploads'
+import { uploadImage, deleteImage, updateImageField } from '../controllers/uploads'
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -24,7 +24,7 @@ export default (app: Object) => {
     authenticateAsAdmin,
     upload.single('avatar'),
     (req: Object, res: Object) => {
-      uploadImage(req.file)
+      updateImageField(req.file, req.body.user_id)
         .then(data => res.json(data))
         .catch(err => res.json(err))
   })

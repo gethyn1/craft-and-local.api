@@ -3,6 +3,11 @@
 import mongoose, { Schema } from 'mongoose'
 
 const ProducerSchema = Schema({
+  avatar: {
+    type: String,
+    lowercase: true,
+    trim: true,
+  },
   user_id: {
     type: String,
     unique: true,
