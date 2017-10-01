@@ -6,6 +6,32 @@ import Producer from '../models/producer'
 
 const PRODUCER_LIMIT = 20
 
+const setProducerFields = (producer: Object) => {
+  let updatedFields = {}
+
+  Object.keys(producer).forEach((key) => {
+    switch (key) {
+      case 'lat':
+        if (!updatedFields.location) {
+          updatedFields.location = { type: 'Point', coordinates: [0, 0] }
+        }
+        updatedFields.location.coordinates[1] = producer[key]
+        break
+      case 'lng':
+        if (!updatedFields.location) {
+          updatedFields.location = { type: 'Point', coordinates: [0, 0] }
+        }
+        updatedFields.location.coordinates[0] = producer[key]
+        break
+      default:
+        updatedFields[key] = producer[key]
+        break
+    }
+  })
+
+  return updatedFields
+}
+
 export const getProducers = (query: Object) =>
   new Promise((resolve, reject) => {
     let limit = PRODUCER_LIMIT
@@ -32,6 +58,7 @@ export const getProducers = (query: Object) =>
 
       if (query.hasOwnProperty('mindistance')) {
         // Set a min distance to query from.
+        // flow-disable-next-line
         filters.location.$near.$minDistance = query.mindistance
       }
 
@@ -73,28 +100,7 @@ export const getProducers = (query: Object) =>
 
 export const createProducer = (producer: Object) =>
   new Promise((resolve, reject) => {
-    const newProducer = new Producer({
-      user_id: producer.user_id,
-      title: producer.title,
-      description: producer.description,
-      categories: producer.categories || [],
-      delivery: producer.delivery,
-      box_scheme: producer.box_scheme,
-      location: {
-        type: "Point",
-        coordinates: [
-          producer.lng,
-          producer.lat,
-        ]
-      },
-      social_handles: {
-        instagram: producer.instagram_handle,
-        twitter: producer.twitter_handle,
-      },
-      website: producer.website,
-      contact_email: producer.contact_email,
-      contact_telephone: producer.contact_telephone,
-    })
+    const newProducer = new Producer(setProducerFields(producer))
 
     newProducer.save((err, data) => {
       if (err) {
@@ -173,4 +179,51 @@ export const getProducerInstagramFeed = (handle: string) =>
         },
       })
     })
+  })
+
+export const updateProducer = (user_id: string, producer: Object) =>
+  new Promise((resolve, reject) => {
+    if (!user_id || user_id === 'undefined') {
+      return reject({
+        status: 'error',
+        data: {
+          title: 'There was an error updating the producer',
+          errors: 'User ID is required',
+        },
+      })
+    }
+
+    if ((producer.lat && !producer.lng) || (producer.lng && !producer.lat)) {
+      return reject({
+        status: 'error',
+        data: {
+          title: 'There was an error updating the producer',
+          errors: 'Supply both latitude and longitude values',
+        },
+      })
+    }
+
+    Producer
+      .findOneAndUpdate(
+        { user_id },
+        setProducerFields(producer),
+        { new: true },
+        (err, data) => {
+          if (err) {
+            reject({
+              status: 'error',
+              data: {
+                title: 'There was an error updating the producer',
+              },
+            })
+          }
+
+          resolve({
+            status: 'success',
+            data: {
+              producer: data,
+            },
+          })
+        }
+      )
   })

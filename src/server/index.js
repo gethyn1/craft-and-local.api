@@ -16,6 +16,7 @@ import './db'
 import { WEB_PORT, isProd, JWT_SECRET, CORS_WEB_APP_ORIGIN, DEBUG } from '../config'
 import producerRoutes from '../routes/producers'
 import categoryRoutes from '../routes/categories'
+import uploadRoutes from '../routes/uploads'
 import { userRoutes, userAdminRoutes } from '../routes/users'
 import robotsTxtRoute from '../routes/robots'
 
@@ -40,7 +41,7 @@ if (isProd) {
   app.enable('trust proxy')
 
   const limiter = new RateLimit({
-    windowMs: 15*60*1000, // 15 minutes
+    windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
     delayMs: 0, // disable delaying - full speed until the max limit is reached
   })
@@ -58,6 +59,7 @@ app.all('*', function(req, res, next) {
 
 producerRoutes(app)
 categoryRoutes(app)
+uploadRoutes(app)
 userRoutes(app)
 userAdminRoutes(app)
 robotsTxtRoute(app)
