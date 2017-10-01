@@ -27,11 +27,12 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
         res.json(unauthorisedResponse)
-      }
+      } else {
 
-      // Save token for use in other routes
-      req.decoded = decoded
-      next()
+        // Save token for use in other routes
+        req.decoded = decoded
+        next()
+      }
     })
 
   } else {
@@ -46,7 +47,7 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
  */
 
 export const authenticateAsAdmin = (req: Object, res: Object, next: Function) => {
-  if (!req.decoded._doc.roles.includes('admin')) {
+  if (!req.decoded || !req.decoded._doc.roles.includes('admin')) {
     res.json(unauthorisedResponse)
   } else {
     next()

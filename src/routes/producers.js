@@ -7,6 +7,7 @@ import {
   getProducers,
   getProducer,
   getProducerInstagramFeed,
+  updateProducer,
 } from '../controllers/producers'
 
 import {
@@ -26,10 +27,10 @@ export default (app: Object) => {
     authenticateJSONWebToken,
     authenticateAsAdmin,
     (req: Object, res: Object) => {
-    createProducer(req.body)
-      .then(data => res.json(data))
-      .catch(err => res.json(err))
-  })
+      createProducer(req.body)
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
+    })
 
   app.get(`${BASE_PATH}/producers/:id`, (req: Object, res: Object) => {
     getProducer(req.params.id)
@@ -42,4 +43,13 @@ export default (app: Object) => {
       .then(data => res.json(data))
       .catch(err => res.json(err))
   })
+
+  app.post(`${BASE_PATH}/producers/:id`,
+    authenticateJSONWebToken,
+    authenticateAsAdmin,
+    (req: Object, res: Object) => {
+      updateProducer(req.params.id, req.body)
+        .then(data => res.json(data))
+        .catch(err => res.json(err))
+    })
 }
