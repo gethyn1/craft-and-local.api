@@ -3,6 +3,11 @@
 import mongoose, { Schema } from 'mongoose'
 
 const ProducerSchema = Schema({
+  avatar: {
+    type: String,
+    lowercase: true,
+    trim: true,
+  },
   user_id: {
     type: String,
     unique: true,
@@ -37,10 +42,8 @@ const ProducerSchema = Schema({
       max: [2, 'Coordinates must contain 2 points']
     }
   },
-  social_handles: {
-    instagram: { type: String },
-    twitter: { type: String },
-  },
+  instagram_handle: { type: String },
+  twitter_handle: { type: String },
   contact_email: {
     type: String,
     trim: true,
