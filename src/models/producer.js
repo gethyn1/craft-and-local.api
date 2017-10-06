@@ -42,8 +42,8 @@ const ProducerSchema = Schema({
       max: [2, 'Coordinates must contain 2 points']
     }
   },
-  instagram_handle: { type: String },
-  twitter_handle: { type: String },
+  instagram_handle: { type: String, default: '' },
+  twitter_handle: { type: String, default: '' },
   contact_email: {
     type: String,
     trim: true,
