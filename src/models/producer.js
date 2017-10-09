@@ -44,11 +44,9 @@ const ProducerSchema = Schema({
   },
   address: {
     type: String,
-    required: 'Address is required',
   },
   locality: {
     type: String,
-    required: 'Locality is required',
   },
   instagram_handle: {
     type: String,
