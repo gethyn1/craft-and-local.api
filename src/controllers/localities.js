@@ -1,10 +1,10 @@
 // @flow
 
-import Category from '../models/category'
+import Locality from '../models/locality'
 
-export const getCategories = () =>
+export const getLocalities = () =>
   new Promise((resolve, reject) => {
-    Category
+    Locality
       .find({})
       .exec((err, results) => {
         if (err) {
@@ -19,7 +19,7 @@ export const getCategories = () =>
         resolve({
           status: 'success',
           data: {
-            categories: results,
+            localities: results,
           },
         })
       })

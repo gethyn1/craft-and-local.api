@@ -46,7 +46,8 @@ const ProducerSchema = Schema({
     type: String,
   },
   locality: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Locality',
   },
   instagram_handle: {
     type: String,
