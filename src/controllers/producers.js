@@ -127,6 +127,7 @@ export const getProducer = (user_id: string) =>
     Producer
       .findOne({ user_id })
       .populate('categories')
+      .populate('locality')
       .exec((err, results) => {
         if (err) {
           reject({

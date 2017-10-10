@@ -2,7 +2,7 @@
 
 import mongoose, { Schema } from 'mongoose'
 
-const CategorySchema = Schema({
+const LocalitySchema = Schema({
   title: {
     type: String,
     required: 'Title is required',
@@ -14,4 +14,4 @@ const CategorySchema = Schema({
   },
 })
 
-export default mongoose.model('Category', CategorySchema)
+export default mongoose.model('Locality', LocalitySchema)

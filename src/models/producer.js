@@ -39,11 +39,24 @@ const ProducerSchema = Schema({
     coordinates: {
       type: [Number],
       min: [2, 'Coordinates must contain 2 points'],
-      max: [2, 'Coordinates must contain 2 points']
+      max: [2, 'Coordinates must contain 2 points'],
     }
   },
-  instagram_handle: { type: String, default: '' },
-  twitter_handle: { type: String, default: '' },
+  address: {
+    type: String,
+  },
+  locality: {
+    type: Schema.Types.ObjectId,
+    ref: 'Locality',
+  },
+  instagram_handle: {
+    type: String,
+    default: '',
+  },
+  twitter_handle: {
+    type: String,
+    default: '',
+  },
   contact_email: {
     type: String,
     trim: true,
