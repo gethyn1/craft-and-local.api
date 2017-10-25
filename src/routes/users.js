@@ -8,6 +8,11 @@ import {
   createUser,
 } from '../controllers/users'
 
+import {
+  authenticateJSONWebToken,
+  authenticateAsAdmin,
+} from '../controllers/auth'
+
 export const userRoutes = (app: Object) => {
   app.post(`${BASE_PATH}/user/authenticate`, (req: Object, res: Object) => {
     authenticateUser(req.body.email, req.body.password, req.app.get('jwtTokenSecret'))
@@ -22,7 +27,11 @@ export const userRoutes = (app: Object) => {
 }
 
 export const userAdminRoutes = (app: Object) => {
-  app.post(`${BASE_PATH}/users/create`, (req: Object, res: Object) => {
+  app.post(
+    `${BASE_PATH}/users/create`,
+    authenticateJSONWebToken,
+    authenticateAsAdmin,
+    (req: Object, res: Object) => {
     createUser(req.body)
       .then(data => res.json(data))
       .catch(err => res.json(err))

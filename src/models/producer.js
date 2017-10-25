@@ -40,6 +40,7 @@ const ProducerSchema = Schema({
       type: [Number],
       min: [2, 'Coordinates must contain 2 points'],
       max: [2, 'Coordinates must contain 2 points'],
+      default: [0, 0],
     }
   },
   address: {
