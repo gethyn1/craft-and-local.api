@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken'
  */
 
 const unauthorisedResponse = {
+  statusCode: 401,
   status: 'error',
   data: {
     title: 'Unauthorised request',
@@ -26,7 +27,7 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
   if (token && token !== 'undefined') {
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        res.json(unauthorisedResponse)
+        res.status(401).json(unauthorisedResponse)
       } else {
 
         // Save token for use in other routes
@@ -37,7 +38,7 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
 
   } else {
     // No JSON web token provided so return error
-    res.json(unauthorisedResponse)
+    res.status(401).json(unauthorisedResponse)
   }
 }
 
@@ -48,7 +49,7 @@ export const authenticateJSONWebToken = (req: Object, res: Object, next: Functio
 
 export const authenticateAsAdmin = (req: Object, res: Object, next: Function) => {
   if (!req.decoded || !req.decoded._doc.roles.includes('admin')) {
-    res.json(unauthorisedResponse)
+    res.status(403).json(unauthorisedResponse)
   } else {
     next()
   }
